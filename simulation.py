@@ -2,8 +2,8 @@ import math
 import numpy as np
 
 # CONSTANTS FOR EQUATIONS
-h = 0.001 # simulation step
-g = 9.81 # gravitation
+h = 0.001  # simulation step
+g = 9.81  # gravitation
 
 
 def simulation(angle, mass, air_resistance, initial_velocity):
@@ -41,7 +41,8 @@ def velocityX(prev_velocityX, air_resistance, mass):
 
 
 def vectorX(prevX, prev_velocityX, air_resistance, mass):
-    return prevX + h * velocityX(prev_velocityX, air_resistance, mass) - (h*h * air_resistance * velocityX(prev_velocityX, air_resistance, mass) / (2 * mass))
+    return prevX + h * velocityX(prev_velocityX, air_resistance, mass) - (
+                h * h * air_resistance * velocityX(prev_velocityX, air_resistance, mass) / (2 * mass))
 
 
 def velocityY(prev_velocityY, air_resistance, mass):
@@ -49,7 +50,8 @@ def velocityY(prev_velocityY, air_resistance, mass):
 
 
 def vectorY(prevY, prev_velocityY, air_resistance, mass):
-    return prevY + h * velocityY(prev_velocityY, air_resistance, mass) + (h*h) * (-g-( air_resistance * velocityY(prev_velocityY, air_resistance, mass)) / mass) / 2
+    return prevY + h * velocityY(prev_velocityY, air_resistance, mass) + (h * h) * (
+                -g - (air_resistance * velocityY(prev_velocityY, air_resistance, mass)) / mass) / 2
 
 
 def find_optimal_angle(mass, air_resistance, initial_velocity):
@@ -59,5 +61,10 @@ def find_optimal_angle(mass, air_resistance, initial_velocity):
     return listRange.index(max(listRange)) / 10
 
 
-
-
+def max_values(angle, mass, air_resistance, initial_velocity):
+    sim = simulation(angle, mass, air_resistance, initial_velocity)
+    max_height = max(sim[1])
+    time_to_max = sim[1].index(max_height) * h
+    flight_time = len(sim[0]) * h
+    max_range = max(sim[0])
+    return [max_height, time_to_max, flight_time, max_range]

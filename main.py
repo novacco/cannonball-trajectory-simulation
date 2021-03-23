@@ -1,10 +1,7 @@
-from PyQt5.QtWidgets import *
-from PyQt5.uic import loadUi
-import math
 from new_gui import Ui_MainWindow
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets
 import sys
-from simulation import simulation, find_optimal_angle
+from simulation import simulation, find_optimal_angle, max_values
 
 
 class Window(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -20,10 +17,10 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.listT = []
 
     def on_sim_click(self):
-        angle = int(self.ui.angle.text())
+        angle = float(self.ui.angle.text())
         air_resistance = float(self.ui.air_resistance.text())
-        initial_velocity = int(self.ui.initial_velocity.text())
-        mass = int(self.ui.mass.text())
+        initial_velocity = float(self.ui.initial_velocity.text())
+        mass = float(self.ui.mass.text())
 
         sim = simulation(angle, mass, air_resistance, initial_velocity)
         self.listX = sim[0]
@@ -31,13 +28,18 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.listT = sim[2]
         self.update_graph()
 
+        maxes = max_values(angle, mass, air_resistance, initial_velocity)
+        self.ui.label_6.setText(f"Flight Time: {round(maxes[2],2)}s")
+        self.ui.label_7.setText(f"Max Range: {round(maxes[3],2)}m")
+        self.ui.label_8.setText(f"Max Height: {round(maxes[0],2)}m in {round(maxes[1],2)}s")
+
     def on_angle_click(self):
         air_resistance = float(self.ui.air_resistance.text())
-        initial_velocity = int(self.ui.initial_velocity.text())
-        mass = int(self.ui.mass.text())
+        initial_velocity = float(self.ui.initial_velocity.text())
+        mass = float(self.ui.mass.text())
 
         angle = find_optimal_angle(mass, air_resistance, initial_velocity)
-        self.ui.label_5.setText("Optimal angle: " + str(angle))
+        self.ui.label_5.setText(f"Optimal angle: {angle}")
 
     def update_graph(self):
         self.ui.cannon_plot.canvas.axes.clear()

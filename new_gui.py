@@ -86,7 +86,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("Cannonball trajectory simulation", "Cannonball trajectory simulation"))
         self.run_sim.setText(_translate("MainWindow", "Run"))
         self.find_angle.setText(_translate("MainWindow", "Optimize angle"))
         self.label.setText(_translate("MainWindow", "Angle phi"))
