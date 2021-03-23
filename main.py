@@ -4,7 +4,7 @@ import math
 from new_gui import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
-from simulation import simulation
+from simulation import simulation, find_optimal_angle
 
 
 class Window(QtWidgets.QMainWindow, Ui_MainWindow):

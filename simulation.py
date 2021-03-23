@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 # CONSTANTS FOR EQUATIONS
 h = 0.001 # simulation step
@@ -51,6 +52,11 @@ def vectorY(prevY, prev_velocityY, air_resistance, mass):
     return prevY + h * velocityY(prev_velocityY, air_resistance, mass) + (h*h) * (-g-( air_resistance * velocityY(prev_velocityY, air_resistance, mass)) / mass) / 2
 
 
+def find_optimal_angle(mass, air_resistance, initial_velocity):
+    listRange = []
+    for angle in np.arange(0, 90, 0.1):
+        listRange.append(simulation(angle, mass, air_resistance, initial_velocity))
+    return listRange.index(max(listRange))/10
 
 
 
