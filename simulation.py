@@ -20,19 +20,21 @@ def simulation(angle, mass, air_resistance, initial_velocity):
 
 
 def velocityX(prev_velocityX, air_resistance, mass):
-    pass
+    return prev_velocityX - (h * air_resistance * prev_velocityX) / mass
 
 
 def vectorX(prevX, prev_velocityX, air_resistance, mass):
-    pass
+    return prevX + h * velocityX(prev_velocityX, air_resistance, mass) - (h*h * air_resistance * velocityX(prev_velocityX, air_resistance, mass) / (2 * mass)
 
 
 def velocityY(prev_velocityY, air_resistance, mass):
-    pass
+    return prev_velocityY - h * g - h * air_resistance * prev_velocityY / mass
 
 
 def vectorY(prevY, prev_velocityY, air_resistance, mass):
-    pass
+    return prevY + h * velocityY(prev_velocityY, air_resistance, mass) + (h*h) * (-g-( air_resistance * velocityY(prev_velocityY, air_resistance, mass)) / mass) / 2
+
+
 
 
 
