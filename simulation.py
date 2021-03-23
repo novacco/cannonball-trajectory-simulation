@@ -33,7 +33,7 @@ def simulation(angle, mass, air_resistance, initial_velocity):
         listT.append(t)
         t += h
 
-    return listX, listY, listT
+    return [listX, listY, listT]
 
 
 def velocityX(prev_velocityX, air_resistance, mass):
@@ -55,8 +55,8 @@ def vectorY(prevY, prev_velocityY, air_resistance, mass):
 def find_optimal_angle(mass, air_resistance, initial_velocity):
     listRange = []
     for angle in np.arange(0, 90, 0.1):
-        listRange.append(simulation(angle, mass, air_resistance, initial_velocity))
-    return listRange.index(max(listRange))/10
+        listRange.append(simulation(angle, mass, air_resistance, initial_velocity)[0][-1])
+    return listRange.index(max(listRange)) / 10
 
 
 

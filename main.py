@@ -25,11 +25,19 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         initial_velocity = int(self.ui.initial_velocity.text())
         mass = int(self.ui.mass.text())
 
-        self.listX, self.listY, self.listT = simulation(angle, mass, air_resistance, initial_velocity)
+        sim = simulation(angle, mass, air_resistance, initial_velocity)
+        self.listX = sim[0]
+        self.listY = sim[1]
+        self.listT = sim[2]
         self.update_graph()
 
     def on_angle_click(self):
-        pass
+        air_resistance = float(self.ui.air_resistance.text())
+        initial_velocity = int(self.ui.initial_velocity.text())
+        mass = int(self.ui.mass.text())
+
+        angle = find_optimal_angle(mass, air_resistance, initial_velocity)
+        self.ui.label_5.setText("Optimal angle: " + str(angle))
 
     def update_graph(self):
         self.ui.cannon_plot.canvas.axes.clear()
