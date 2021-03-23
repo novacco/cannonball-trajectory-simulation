@@ -4,6 +4,7 @@ import math
 from new_gui import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
+from simulation import simulation
 
 
 class Window(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -14,12 +15,40 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.ui.run_sim.clicked.connect(self.on_sim_click)
         self.ui.find_angle.clicked.connect(self.on_angle_click)
+        self.listX = []
+        self.listY = []
+        self.listT = []
 
     def on_sim_click(self):
-        pass
+        angle = int(self.ui.angle.text())
+        air_resistance = float(self.ui.air_resistance.text())
+        initial_velocity = int(self.ui.initial_velocity.text())
+        mass = int(self.ui.mass.text())
+
+        self.listX, self.listY, self.listT = simulation(angle, mass, air_resistance, initial_velocity)
+        self.update_graph()
 
     def on_angle_click(self):
         pass
+
+    def update_graph(self):
+        self.ui.cannon_plot.canvas.axes.clear()
+        self.ui.cannon_plot.canvas.axes.plot(self.listX, self.listY)
+        self.ui.cannon_plot.canvas.axes.legend("H", loc='upper right')
+        self.ui.cannon_plot.canvas.axes.set_title('Ball flight trajectory')
+        self.ui.cannon_plot.canvas.draw()
+
+        self.ui.x_plot.canvas.axes.clear()
+        self.ui.x_plot.canvas.axes.plot(self.listT, self.listX)
+        self.ui.x_plot.canvas.axes.legend("R", loc='upper right')
+        self.ui.x_plot.canvas.axes.set_title('Range in time')
+        self.ui.x_plot.canvas.draw()
+
+        self.ui.y_plot.canvas.axes.clear()
+        self.ui.y_plot.canvas.axes.plot(self.listT, self.listY)
+        self.ui.y_plot.canvas.axes.legend("H", loc='upper right')
+        self.ui.y_plot.canvas.axes.set_title('Height in time')
+        self.ui.y_plot.canvas.draw()
 
 
 def main():
